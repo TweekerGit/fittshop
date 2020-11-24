@@ -69,8 +69,8 @@ div.assortment {
     max-height: 0;
 }
 
-@media handheld {
-    .size {
+@media (max-width: 850px) {
+    p.size {
         color: black;
     }
 }
