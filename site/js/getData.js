@@ -1,10 +1,8 @@
+const dbUrl = 'https://fittshop.herokuapp.com/goods';
+
 const container = document.getElementById('all__assortment');
 const hiddenBlock = document.querySelector('.presentation');
 const zagolovok = document.getElementById('zagolovok')
-
-// get from db
-const databaseContent = getDataFromDB();
-if (container) displayCards(databaseContent);
 
 const triggers = {
     tab: document.querySelector('#linkOfTab'),
@@ -15,45 +13,74 @@ const triggers = {
 
 
 
+getDataFromDB((databaseContent) => {
+    if (container) displayCards(databaseContent);
+
+    for (const [filter, trigger] of Object.entries(triggers)) {
+        if (!trigger) continue;
+
+        trigger.addEventListener('click', event => {
+            event.preventDefault()
+            switch (filter) {
+                case 'tab':
+                    zagolovok.innerHTML = 'Табуретки та столи';
+                    break;
+                case 'mat':
+                    zagolovok.innerHTML = 'Матраци';
+                    break;
+                case 'bed':
+                    zagolovok.innerHTML = 'Ліжка';
+                    break;
+                case 'tum':
+                    zagolovok.innerHTML = 'Тумбочки';
+                    break;
+            }
+            const result = []
+            for (let good of databaseContent) {
+                if (filter == good.type) {
+                    // console.log(good);
+                    result.push(good);
+                }
+            }
+            // console.log(result);
+            hiddenBlock.classList.add('hidden');
+            displayCards(result);
+        })
+    }
+});
 
 
+function getDataFromDB(callbackHandler) {
+    // {
+    //     id: 1,
+    //     photo1: 'img/goods/1.2.png',
+    //     title: 'Дубова табуретка',
+    //     size: 'XxYxZ',
+    //     price: 275,
+    //     type: 'tab'
+    // }
 
+    // Returns an HTTP request object
+    function getRequestObject() {
+        if (window.XMLHttpRequest) return new XMLHttpRequest();
+        // For very old IE browsers (optional)
+        else if (window.ActiveXObject) return new ActiveXObject("Microsoft.XMLHTTP");
+        window.alert("Ajax is not supported!");
+        return null;
+    }
 
-function getDataFromDB() {
-    return [{
-            id: 1,
-            photo1: 'img/goods/1.2.png',
-            title: 'Дубова табуретка',
-            size: 'XxYxZ',
-            price: 275,
-            type: 'tab'
-        },
-        {
-            id: 2,
-            photo1: 'img/goods/goods.jpg',
-            title: 'Слонова тумбочка',
-            size: 'XxYxZ',
-            price: 285,
-            type: 'tum'
-        },
-        {
-            id: 3,
-            photo1: 'img/goods/goods.jpg',
-            title: 'Твікеровий матрац',
-            size: 'XxYxZ',
-            price: 255,
-            type: 'mat'
-        },
-        {
-            id: 4,
-            photo1: 'img/goods/goods.jpg',
-            title: 'Твікеровий матрац',
-            size: 'XxYxZ',
-            price: 255,
-            type: 'mat'
+    const request = getRequestObject();
+
+    request.onreadystatechange = () => {
+        if (request.readyState == 4 && request.status == 200) {
+            result = JSON.parse(request.responseText);
+            callbackHandler(result); // raise all code
         }
-    ];
+    };
+    request.open('GET', dbUrl, true);
+    request.send(null); // for POST only
 }
+
 
 function displayCards(cards) {
     // console.log(container);
@@ -64,6 +91,7 @@ function displayCards(cards) {
         container.appendChild(createCard(card));
     }
 }
+
 
 function createCard(data) {
     const card = document.createElement('div');
@@ -82,34 +110,4 @@ function createCard(data) {
     `;
     // console.log(card);
     return card;
-}
-
-for (const [filter, trigger] of Object.entries(triggers)) {
-    trigger.addEventListener('click', event => {
-        event.preventDefault()
-        switch (filter) {
-            case 'tab':
-                zagolovok.innerHTML = 'Табуретки та столи';
-                break;
-            case 'mat':
-                zagolovok.innerHTML = 'Матраци';
-                break;
-            case 'bed':
-                zagolovok.innerHTML = 'Ліжка';
-                break;
-            case 'tum':
-                zagolovok.innerHTML = 'Тумбочки';
-                break;
-        }
-        const result = []
-        for (let good of databaseContent) {
-            if (filter == good.type) {
-                // console.log(good);
-                result.push(good);
-            }
-        }
-        // console.log(result);
-        hiddenBlock.classList.add('hidden');
-        displayCards(result);
-    })
 }
