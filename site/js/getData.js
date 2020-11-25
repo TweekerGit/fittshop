@@ -104,7 +104,7 @@ function createCard(data) {
                     <h3>${data.title}</h3>
                 </a>
                 <p class="size">Розміри: ${data.size}</p>
-                <p class="price">Ціна: ${data.price} грн</p>
+                <p class="price">Ціна: ${data.price}</p>
             </div>
         </a>
     `;
