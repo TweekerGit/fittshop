@@ -1,3 +1,5 @@
+const swiperContainer = document.getElementById('swiper-wrapper');
+
 getDataFromDB((databaseContent) => {
 
     function getById(id) {
@@ -15,24 +17,30 @@ getDataFromDB((databaseContent) => {
 
     const current = getById(id);
 
-    const photo1 = document.getElementById('goods_photo1'),
-        photo2 = document.getElementById('goods_photo2'),
-        photo3 = document.getElementById('goods_photo3'),
-        photo4 = document.getElementById('goods_photo4'),
-        title = document.getElementById('title'),
+    const title = document.getElementById('title'),
         size = document.getElementById('size'),
         description = document.getElementById('description');
 
     title.innerText = current.title || 'Товар не знайдено';
-    size.innerText = current.size || '';
+    size.innerText = 'Розміри: ' + (current.size || 'Не знайдено');
     description.innerText = current.description || 'Ви дурбелик';
-
-    photo1.src = current.photo1;
-    photo2.src = current.photo2;
-    photo3.src = current.photo3;
-    photo4.src = current.photo4;
-
+    addSlide(current.photo1);
+    addSlide(current.photo2);
+    addSlide(current.photo3);
+    addSlide(current.photo4);
 });
+
+function addSlide(source) {
+    if (source) {
+        swiperContainer.innerHTML = `
+    <div class="swiper-slide">
+        <div class="swiper-zoom-container">
+            <img src="${source}">
+        </div>
+    </div>
+   ` + swiperContainer.innerHTML;
+    }
+}
 
 
 function findGetParameter(parameterName) {

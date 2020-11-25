@@ -10,17 +10,17 @@ plusik.addEventListener('click', event => {
 })
 
 tab.addEventListener('click', event => {
-    listToShow.classList.remove('toshow');
+    listToShow.classList.toggle('toshow');
 })
 
 mat.addEventListener('click', event => {
-    listToShow.classList.remove('toshow');
+    listToShow.classList.toggle('toshow');
 })
 
 bed.addEventListener('click', event => {
-    listToShow.classList.remove('toshow');
+    listToShow.classList.toggle('toshow');
 })
 
 tum.addEventListener('click', event => {
-    listToShow.classList.remove('toshow');
+    listToShow.classList.toggle('toshow');
 })
