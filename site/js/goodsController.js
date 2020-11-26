@@ -24,10 +24,24 @@ getDataFromDB((databaseContent) => {
     title.innerText = current.title || 'Товар не знайдено';
     size.innerText = 'Розміри: ' + (current.size || 'Не знайдено');
     description.innerText = current.description || 'Ви дурбелик';
-    addSlide(current.photo1);
-    addSlide(current.photo2);
-    addSlide(current.photo3);
     addSlide(current.photo4);
+    addSlide(current.photo3);
+    addSlide(current.photo2);
+    addSlide(current.photo1);
+
+    var swiper = new Swiper('.swiper-container', {
+        // effect: 'flip',
+        // loop: false,
+        pagination: {
+            el: '.swiper-pagination',
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+
+    });
+
 });
 
 function addSlide(source) {
@@ -41,6 +55,7 @@ function addSlide(source) {
    ` + swiperContainer.innerHTML;
     }
 }
+
 
 
 function findGetParameter(parameterName) {

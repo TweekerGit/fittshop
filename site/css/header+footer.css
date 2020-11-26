@@ -77,15 +77,6 @@ input {
     flex-shrink: 2;
 }
 
-.hover_to_show:hover .nav_hidden {
-    display: block;
-    z-index: 9999;
-    width: 350px;
-    left: -50px;
-    top: 25px;
-    background-color: #ffffff;
-}
-
 .nav_hidden a:hover {
     cursor: pointer;
 }
@@ -177,6 +168,17 @@ div.contacts:last-child>p {
 
 .copyright {
     font-size: 0.8rem;
+}
+
+@media(min-width: 1200px) {
+    .hover_to_show:hover .nav_hidden {
+        display: block;
+        z-index: 9999;
+        width: 350px;
+        left: -50px;
+        top: 25px;
+        background-color: #ffffff;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
