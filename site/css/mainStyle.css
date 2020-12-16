@@ -61,6 +61,18 @@ div.assortment {
     box-shadow: 0 0 3px 3px rgb(218, 218, 218);
 }
 
+.goods h3 {
+    margin: 15px 0;
+}
+
+.goods p {
+    margin: 5px 0;
+}
+
+.goods p:nth-child(4) {
+    margin-bottom: 20px;
+}
+
 .hidden {
     display: none;
     opacity: 0;
